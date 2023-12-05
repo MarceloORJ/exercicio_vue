@@ -13,7 +13,7 @@ function calculo (){
   const n2 = parseFloat(estado.num2);
 
 if(isNaN(n1) || isNaN(n2)){
-  return 0
+  return 0;
 }
 
   switch (estado.operacao) {
