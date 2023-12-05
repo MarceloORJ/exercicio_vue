@@ -1,47 +1,67 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { reactive } from 'vue';
+
+const estado = reactive ({
+  operacao: 'soma',
+  num1: '',
+  num2: '',
+});
+
+
+function calculo (){
+  const n1 = parseFloat(estado.num1);
+  const n2 = parseFloat(estado.num2);
+
+if(isNaN(n1) || isNaN(n2)){
+  return 0
+}
+
+  switch (estado.operacao) {
+    case 'subtracao':
+      return n1 - n2;
+    case 'divisao':
+      return n1 / n2;
+    case 'multiplicacao':
+      return n1 * n2;
+    default:
+      return n1 + n2;
+  };
+};
+
+calculo();
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div class="container">
+    <div class="mt-5">
+      <h1>Calculadora</h1>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <div>
+      <div class="calculadora">
+        <input class="col-4 form-control" type="number" v-model="estado.num1" placeholder="Digite o primeiro número">        
+        <select class="operacoes col-md-2 mt-3 mb-3 form-control" @change="evento => estado.operacao = evento.target.value">
+          <option value="soma">+</option>
+          <option value="subtracao">-</option>
+          <option value="divisao">/</option>
+          <option value="multiplicacao">*</option>
+        </select>
+        <input class="col-md-4 form-control" type="number" v-model="estado.num2" placeholder="Digite o segundo número">        
+      </div>
+      <div class="resultado">
+        <h2>
+          Resultado: {{ calculo(result) }}
+        </h2>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+  .resultado{
+    margin-top: 10px;
+    padding: 10px 5px;
+    background-color: #ebb31a;
+    border-radius: .5cqw;
   }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
